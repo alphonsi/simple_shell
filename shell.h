@@ -127,8 +127,10 @@ int builtin_search(data_t *input);
 void _findthecmd(data_t *input);
 void _forkthecmd(data_t *input);
 
-/* path prototypes  */
-int is_cmd(data_t *, char *);
+/* path.c prototypes  */
+int issanxcutable(feed_t *info, char *path);
+char *dup_charss(char *pathstr, int start, int stop);
+char *fi_path(feed_t *info, char *pathstr, char *cmd)
 char *dup_chars(char *, int, int);
 char *find_path(data_t *, char *, char *);
 
@@ -162,13 +164,39 @@ char *_strdup(const char *str);
 char **strtow(char *, char *);
 char **strtow2(char *, char);
 
-/* memory functions */
+/* memp.c  functions */
 char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
-
-/* memory functions 2  */
+void free_info(feed_t *info, int all);
+void set_info(feed_t *info, char **av);
+void clear_info(feed_t *info);
+int str2int(char *b);
+void print_errmsg(feed_t *info, char *estr)
+int print_dec(int input, int fd)
+char *convert_number(long int num, int base, int flags)
+void remov_cmts(char *buf)
 int bfree(void **);
+
+/* pipe.c functions  */
+char *convert_number(long int num, int base, int flags)
+int print_dec(int input, int fd)
+int str2int(char *b)
+void print_errmsg(feed_t *info, char *estr)
+void remov_cmts(char *buf)
+
+/* re-routing.c functions */
+ 
+char *fillsmem(char *s, char b, unsigned int n)
+void freestr(char **pp)
+void *reallocmem(void *ptr, unsigned int old_size, unsigned int new_size)
+
+
+/* utilis.c functions */
+int issachain_delim(feed_t *info, char *buf, size_t *p)
+void checkchaining(feed_t *info, char *buf, size_t *p, size_t i, size_t len)
+int replace_analias(feed_t *info)
+int replace_var(feed_t *info)
+int sub_string(char **old, char *new)
+
 
 /* functions  */
 int interactive(data_t *);
