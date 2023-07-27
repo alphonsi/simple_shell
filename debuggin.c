@@ -2,14 +2,14 @@
 
 /**
  * issaninteractive - returns true if shell is interactive mode
- * @info: this is struct address
+ * @input: this is struct address
  *
  * Return: 1 if it is interactive mode, 0 otherwise
  *
  */
-int issaninteractive(feed_t *info)
+int issaninteractive(data_t *input)
 {
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
+	return (isatty(STDIN_FILENO) && input->readfd <= 2);
 }
 
 /**

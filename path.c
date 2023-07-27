@@ -1,18 +1,18 @@
 #include "shell.h"
 
 /**
- * issanxcutable- determines if a file is an executable command
- * @info: the info struct
+ * is_executable- determines if a file is an executable command
+ * @input: the info struct
  * @path: path to the file
  *
  * Return: 1 if true, 0 otherwise
  *
  */
-int issanxcutable(feed_t *info, char *path)
+int is_executable(data_t *input, char *path)
 {
 	struct stat st;
 
-	(void)info;
+	(void)input;
 	if (!path || stat(path, &st))
 		return (0);
 
@@ -45,40 +45,40 @@ char *dup_charss(char *pathstr, int start, int stop)
 }
 
 /**
- * *fi_path- finds this cmd in the PATH string
- * @info: the info struct
+ * find_path- finds this cmd in the PATH string
+ * @input: the info struct
  * @pathstr: the PATH string
- * @cmd: the cmd to find
+ * @c: the cmd to find
  *
  * Return: full path of cmd if found or NULL
  *
  */
-char *fi_path(feed_t *info, char *pathstr, char *cmd)
+char *find_path(data_t *input, char *pathstr, char *c)
 {
 	int i = 0, curr_pos = 0;
-	char *path;
+	char *p;
 
 	if (!pathstr)
 		return (NULL);
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((_strlen(c) > 2) && starts_with(c, "./"))
 	{
-		if (is_cmd(info, cmd))
-			return (cmd);
+		if (is_executable(input, c))
+			return (c);
 	}
 	while (1)
 	{
 		if (!pathstr[i] || pathstr[i] == ':')
 		{
-			path = dup_chars(pathstr, curr_pos, i);
-			if (!*path)
-				_strcat(path, cmd);
+			p = dup_charss(pathstr, curr_pos, i);
+			if (!*p)
+				_strcat(p, c);
 			else
 			{
-				_strcat(path, "/");
-				_strcat(path, cmd);
+				_strcat(p, "/");
+				_strcat(p, c);
 			}
-			if (is_cmd(info, path))
-				return (path);
+			if (is_executable(input, p))
+				return (p);
 			if (!pathstr[i])
 				break;
 			curr_pos = i;

@@ -33,7 +33,7 @@ int _unsetmyenv(data_t *input, char *value)
 
 	while (node)
 	{
-		p = starts_with(node->str, value);
+		n = starts_with(node->str, value);
 		if (n && *n == '=')
 		{
 			input->env_changed = delete_node_at_index(&(input->env), m);
@@ -63,7 +63,7 @@ int _setmyenv(data_t *input, char *varia, char *value)
 	if (!varia || !value)
 		return (0);
 
-	buf = malloc(_strlen(var) + _strlen(value) + 2);
+	buf = malloc(_strlen(varia) + _strlen(value) + 2);
 	if (!buf)
 		return (1);
 	_strcpy(buf, varia);

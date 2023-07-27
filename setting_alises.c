@@ -40,7 +40,7 @@ int set_the_alias(data_t *input, char *str)
 	if (!*++ch)
 		return (_unsetalias(input, str));
 
-	unset_alias(input, str);
+	_unsetalias(input, str);
 	return (add_node_at_end(&(input->alias), str, 0) == NULL);
 }
 
@@ -50,7 +50,7 @@ int set_the_alias(data_t *input, char *str)
  *
  * Return: Always 0 on success, 1 on error
  */
-int print_thealias(roster_t *node)
+int print_thealias(log_t *node)
 {
 	char *m = NULL, *a = NULL;
 

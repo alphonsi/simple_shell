@@ -2,14 +2,13 @@
 
 /**
  * issachain_delim - test if current char in buffer is a chain delimeter
- * @info: the parameter struct
+ * @input: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf
  *
  * Return: 1 if chain delimeter, 0 otherwise
- *
  */
-int issachain_delim(feed_t *info, char *buf, size_t *p)
+int issachain_delim(data_t *input, char *buf, size_t *p)
 {
 	size_t k = *p;
 
@@ -17,18 +16,18 @@ int issachain_delim(feed_t *info, char *buf, size_t *p)
 	{
 		buf[k] = 0;
 		k++;
-		info->cmd_buf_type = CMD_OR;
+		input->cmd_buf_type = CMD_OR;
 	}
 	else if (buf[k] == '&' && buf[k + 1] == '&')
 	{
 		buf[k] = 0;
 		k++;
-		info->cmd_buf_type = CMD_AND;
+		input->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[k] == ';') /* found end of this command */
+	else if (buf[k] == ';')
 	{
-		buf[k] = 0; /* substitute semicolon with null */
-		info->cmd_buf_type = CMD_CHAIN;
+		buf[k] = 0;
+		input->cmd_buf_type = CMD_CHAIN;
 	}
 	else
 		return (0);
@@ -38,7 +37,7 @@ int issachain_delim(feed_t *info, char *buf, size_t *p)
 
 /**
  * checkchaining - checks we should continue chaining based on last status
- * @info: the parameter struct
+ * @input: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf
  * @i: starting position in buf
@@ -47,21 +46,21 @@ int issachain_delim(feed_t *info, char *buf, size_t *p)
  * Return: Void
  *
  */
-void checkchaining(feed_t *info, char *buf, size_t *p, size_t i, size_t len)
+void checkchaining(data_t *input, char *buf, size_t *p, size_t i, size_t len)
 {
 	size_t k = *p;
 
-	if (info->cmd_buf_type == CMD_AND)
+	if (input->cmd_buf_type == CMD_AND)
 	{
-		if (info->status)
+		if (input->status)
 		{
 			buf[i] = 0;
 			k = len;
 		}
 	}
-	if (info->cmd_buf_type == CMD_OR)
+	if (input->cmd_buf_type == CMD_OR)
 	{
-		if (!info->status)
+		if (!input->status)
 		{
 			buf[i] = 0;
 			k = len;
@@ -73,71 +72,71 @@ void checkchaining(feed_t *info, char *buf, size_t *p, size_t i, size_t len)
 
 /**
  * replace_analias - substitutes an aliases in the tokenized string
- * @info: the parameter struct
+ * @input: the parameter struct
  *
  * Return: 1 if substituted, 0 otherwise
  *
  */
-int replace_analias(feed_t *info)
+int replace_analias(data_t *input)
 {
 	int i;
-	roster_t *node;
+	log_t *node;
 	char *p;
 
 	for (i = 0; i < 10; i++)
 	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
+		node = node_starts_with(input->alias, input->argv[0], '=');
 		if (!node)
 			return (0);
-		free(info->argv[0]);
+		free(input->argv[0]);
 		p = _strchr(node->str, '=');
 		if (!p)
 			return (0);
 		p = _strdup(p + 1);
 		if (!p)
 			return (0);
-		info->argv[0] = p;
+		input->argv[0] = p;
 	}
 	return (1);
 }
 
 /**
  * replace_var - substitutes variables in the tokenized string
- * @info: the parameter struct
+ * @input: the parameter struct
  *
  * Return: 1 if substituted, 0 otherwise
  *
  */
-int replace_var(feed_t *info)
+int replace_var(data_t *input)
 {
 	int i = 0;
-	roster_t *node;
+	log_t *node;
 
-	for (i = 0; info->argv[i]; i++)
+	for (i = 0; input->argv[i]; i++)
 	{
-		if (info->argv[i][0] != '$' || !info->argv[i][1])
+		if (input->argv[i][0] != '$' || !input->argv[i][1])
 			continue;
 
-		if (!_strcmp(info->argv[i], "$?"))
+		if (!_strcmp(input->argv[i], "$?"))
 		{
-			substitute_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
+			sub_string(&(input->argv[i]),
+				_strdup(convert_number(input->status, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!_strcmp(input->argv[i], "$$"))
 		{
-			substitute_string(&(info->argv[i]),
+			sub_string(&(input->argv[i]),
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
+		node = node_starts_with(input->env, &input->argv[i][1], '=');
 		if (node)
 		{
-			substitute_string(&(info->argv[i]),
+			sub_string(&(input->argv[i]),
 				_strdup(_strchr(node->str, '=') + 1));
 			continue;
 		}
-		substitute_string(&info->argv[i], _strdup(""));
+		sub_string(&input->argv[i], _strdup(""));
 
 	}
 	return (0);
@@ -157,4 +156,3 @@ int sub_string(char **old, char *new)
 	*old = new;
 	return (1);
 }
-

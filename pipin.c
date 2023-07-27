@@ -1,51 +1,22 @@
 #include "shell.h"
 
 /**
- * str2int - converts a string to an integer
- * @b: the string to be converted
- * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
- *
- */
-int str2int(char *b)
-{
-	int i = 0;
-	unsigned long int result = 0;
-
-	if (*b == '+')
-		b++;
-	for (i = 0;  b[i] != '\0'; i++)
-	{
-		if (b[i] >= '0' && b[i] <= '9')
-		{
-			result *= 10;
-			result += (b[i] - '0');
-			if (result > INT_MAX)
-				return (-1);
-		}
-		else
-			return (-1);
-	}
-	return (result);
-}
-
-/**
  * print_errmsg - prints an error message
- * @info: the parameter & return info struct
+ * @input: the parameter & return info struct
  * @estr: string containing specified error type
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
  *
  */
-void print_errmsg(feed_t *info, char *estr)
+void print_errmsg(data_t *input, char *estr)
 {
-	_eputs(info->fname);
-	_eputs(": ");
-	print_d(info->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(info->argv[0]);
-	_eputs(": ");
-	_eputs(estr);
+	_erputs(input->fname);
+	_erputs(": ");
+	print_dec(input->line_count, STDERR_FILENO);
+	_erputs(": ");
+	_erputs(input->argv[0]);
+	_erputs(": ");
+	_erputs(estr);
 }
 
 /**
@@ -63,7 +34,7 @@ int print_dec(int input, int fd)
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
-		__putchar = _eputchar;
+		__putchar = _erputchar;
 	if (input < 0)
 	{
 		_abs_ = -input;
@@ -89,7 +60,7 @@ int print_dec(int input, int fd)
 }
 
 /**
- * convert_num - converter function, a clone of itoa
+ * convert_number- converter function, a clone of itoa
  * @num: number
  * @base: base
  * @flags: argument flags

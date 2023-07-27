@@ -22,7 +22,7 @@ char *fillsmem(char *s, char b, unsigned int n)
  * @pp: string of strings
  *
  */
-void freestr(char **pp)
+void ffree(char **pp)
 {
 	char **a = pp;
 

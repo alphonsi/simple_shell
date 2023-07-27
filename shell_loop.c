@@ -1,7 +1,5 @@
 #include "shell.h"
 
-#include "shell.h"
-
 /**
  * _shell_loop - the main shell loop
  * @input: parameter used in the loop
@@ -17,7 +15,7 @@ int _shell_loop(data_t *input, char **av)
 	while (p != -1 && builtin_ret != -2)
 	{
 		clear_info(input);
-		if (interactive(input))
+		if (issaninteractive(input))
 			_puts("$ ");
 		_erputchar(BUF_FLUSH);
 		p = get_input(input);
@@ -28,13 +26,13 @@ int _shell_loop(data_t *input, char **av)
 			if (builtin_ret == -1)
 				_findthecmd(input);
 		}
-		else if (interactive(input))
+		else if (issaninteractive(input))
 			_putchar('\n');
 		free_info(input, 0);
 	}
-	write_history(input);
+	write_the_hist(input);
 	free_info(input, 1);
-	if (!interactive(input) && input->status)
+	if (!issaninteractive(input) && input->status)
 		exit(input->status);
 	if (builtin_ret == -2)
 	{
@@ -55,22 +53,22 @@ int builtin_search(data_t *input)
 {
 	int m, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", _Shellyexit},
+		{"exit", _myexit},
 		{"env", _myenv},
-		{"help", _Shellyhelp},
-		{"history", _Shellyhistory},
+		{"help", _help},
+		{"history", _history},
 		{"setenv", _mysetenv},
 		{"unsetenv", _myunsetenv},
-		{"cd", _Shellycd},
-		{"alias", _Shellyalias},
+		{"cd", _cd},
+		{"alias", _alias},
 		{NULL, NULL}
 	};
 
-	for (i = 0; builtintbl[i].type; i++)
-		if (_strcmp(input->argv[0], builtintbl[i].type) == 0)
+	for (m = 0; builtintbl[m].type; m++)
+		if (_strcmp(input->argv[0], builtintbl[m].type) == 0)
 		{
 			input->line_count++;
-			built_in_ret = builtintbl[i].func(input);
+			built_in_ret = builtintbl[m].func(input);
 			break;
 		}
 	return (built_in_ret);
@@ -111,7 +109,7 @@ void _forkthecmd(data_t *input)
 		{
 			input->status = WEXITSTATUS(input->status);
 			if (input->status == 126)
-				print_error(input, "Permission denied\n");
+				print_errmsg(input, "Permission denied\n");
 		}
 	}
 }
@@ -135,7 +133,7 @@ void _findthecmd(data_t *input)
 		input->linecount_flag = 0;
 	}
 	for (p = 0, n = 0; input->arg[p]; n++)
-		if (!is_delim(input->arg[p], " \t\n"))
+		if (!issadelim(input->arg[p], " \t\n"))
 			n++;
 	if (!n)
 		return;
@@ -148,13 +146,13 @@ void _findthecmd(data_t *input)
 	}
 	else
 	{
-		if ((interactive(input) || _getenv(input, "PATH=")
-			|| input->argv[0][0] == '/') && is_cmd(input, input->argv[0]))
+		if ((issaninteractive(input) || _mygetenv(input, "PATH=")
+			|| input->argv[0][0] == '/') && is_executable(input, input->argv[0]))
 			_forkthecmd(input);
 		else if (*(input->arg) != '\n')
 		{
 			input->status = 127;
-			print_error(input, "not found\n");
+			print_errmsg(input, "not found\n");
 		}
 	}
 }

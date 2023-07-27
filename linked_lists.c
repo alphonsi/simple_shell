@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * list_length - calculates the length of the list
+ * list_len - calculates the length of the list
  * @head: pointer to first node
  *
  * Return: size
  */
-size_t list_length(const log_t *head)
+size_t list_len(const log_t *head)
 {
-	size_t m = 0;
+size_t m = 0;
 
 	while (head)
 	{

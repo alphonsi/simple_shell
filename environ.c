@@ -32,7 +32,7 @@ char *_mygetenv(data_t *input, const char *name)
 
 int _myenv(data_t *input)
 {
-		print_list_str(input->env);
+		print_str_list(input->env);
 			return (0);
 }
 
@@ -69,8 +69,8 @@ int _myunsetenv(data_t *input)
 		_erputs("Too few arguements.\n");
 		return (1);
 	}
-	for (n = 1; n <= input->argc; i++)
-		_unsetmyenv(input, input->argv[i]);
+	for (n = 1; n <= input->argc; n++)
+		_unsetmyenv(input, input->argv[n]);
 
 	return (0);
 }

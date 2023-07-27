@@ -2,76 +2,76 @@
 
 /**
  * clear_info - initializes feed_t struct
- * @info: struct address
+ * @input: struct address
  *
  */
-void clear_info(feed_t *info)
+void clear_info(data_t *input)
 {
-	info->arg = NULL;
-	info->argv = NULL;
-	info->path = NULL;
-	info->argc = 0;
+	input->arg = NULL;
+	input->argv = NULL;
+	input->path = NULL;
+	input->argc = 0;
 }
 
 /**
  * set_info - initializes feed_t struct
- * @info: struct address
+ * @input: struct address
  * @av: argument vector
  *
  */
-void set_info(feed_t *info, char **av)
+void set_info(data_t *input, char **av)
 {
 	int i = 0;
 
-	info->fname = av[0];
-	if (info->arg)
+	input->fname = av[0];
+	if (input->arg)
 	{
-		info->argv = strtow(info->arg, " \t");
-		if (!info->argv)
+		input->argv = _strtok(input->arg, " \t");
+		if (!input->argv)
 		{
 
-			info->argv = malloc(sizeof(char *) * 2);
-			if (info->argv)
+			input->argv = malloc(sizeof(char *) * 2);
+			if (input->argv)
 			{
-				info->argv[0] = _strdup(info->arg);
-				info->argv[1] = NULL;
+				input->argv[0] = _strdup(input->arg);
+				input->argv[1] = NULL;
 			}
 		}
-		for (i = 0; info->argv && info->argv[i]; i++)
+		for (i = 0; input->argv && input->argv[i]; i++)
 			;
-		info->argc = i;
+		input->argc = i;
 
-		substitute_alias(info);
-		substitute_vars(info);
+		replace_analias(input);
+		replace_var(input);
 	}
 }
 
 /**
  * free_info - frees feed_t struct fields
- * @info: struct address
+ * @input: struct address
  * @all: true if freeing all fields
  *
  */
-void free_info(feed_t *info, int all)
+void free_info(data_t *input, int all)
 {
-	ffree(info->argv);
-	info->argv = NULL;
-	info->path = NULL;
+	ffree(input->argv);
+	input->argv = NULL;
+	input->path = NULL;
 	if (all)
 	{
-		if (!info->cmd_buf)
-			free(info->arg);
-		if (info->env)
-			free_list(&(info->env));
-		if (info->history)
-			free_list(&(info->history));
-		if (info->alias)
-			free_list(&(info->alias));
-		ffree(info->environ);
-			info->environ = NULL;
-		bfree((void **)info->cmd_buf);
-		if (info->readfd > 2)
-			close(info->readfd);
+		if (!input->cmd_buf)
+			free(input->arg);
+		if (input->env)
+			free_list(&(input->env));
+		if (input->history)
+			free_list(&(input->history));
+		if (input->alias)
+			free_list(&(input->alias));
+		ffree(input->environ);
+			input->environ = NULL;
+		bfree((void **)input->cmd_buf);
+		if (input->readfd > 2)
+			close(input->readfd);
 		_putchar(BUF_FLUSH);
 	}
 }

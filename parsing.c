@@ -15,9 +15,9 @@ char **_strtok(char *string, char *lim)
 	if (string == NULL || string[0] == 0)
 		return (NULL);
 	if (!lim)
-		delim = " ";
+		lim = " ";
 	for (i = 0; string[i] != '\0'; i++)
-		if (!is_delim(string[i], d) && (is_delim(str[i + 1], d) || !string[i + 1]))
+		if (!issadelim(string[i], lim) && (issadelim(string[i + 1], lim) || !string[i + 1]))
 			numwords++;
 
 	if (numwords == 0)
@@ -27,10 +27,10 @@ char **_strtok(char *string, char *lim)
 		return (NULL);
 	for (i = 0, e = 0; e < numwords; e++)
 	{
-		while (is_delim(string[i], lim))
+		while (issadelim(string[i], lim))
 			i++;
 		k = 0;
-		while (!is_delim(str[i + k], lim) && string[i + k])
+		while (!issadelim(string[i + k], lim) && string[i + k])
 			k++;
 		s[e] = malloc((k + 1) * sizeof(char));
 		if (!s[e])

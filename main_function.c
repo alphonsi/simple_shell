@@ -38,7 +38,7 @@ int main(int ac, char **av)
 		input->readfd = fd;
 	}
 	_env_populate(input);
-	read_history(input);
+	read_hist(input);
 	_shell_loop(input, av);
 	return (EXIT_SUCCESS);
 }

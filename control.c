@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * strlength - returns the length of a string
+ * _strlen - returns the length of a string
  * @s: the string whose len to check
  *
  * Return: integer len of string
  *
  */
-int strlength(char *s)
+int _strlen(char *s)
 {
 	int i = 0;
 
@@ -20,14 +20,14 @@ int strlength(char *s)
 }
 
 /**
- * strcmpre - performs lexicogarphic comparison of two strangs.
+ * _strcmp - performs lexicogarphic comparison of two strangs.
  * @s1: the first str
  * @s2: the second str
  *
  * Return: negative if s1 < s2, positive if s1 > s2, zero if s1 == s2
  *
  */
-int strcmpre(char *s1, char *s2)
+int _strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2)
 	{
@@ -59,14 +59,14 @@ char *starts_with(const char *haystack, const char *needle)
 }
 
 /**
- * strconcat - concatenates two strings
+ * _strcat - concatenates two strings
  * @dest: the destination buffer
  * @src: the source buffer
  *
  * Return: pointer to destination buffer
  *
  */
-char *strconcat(char *dest, char *src)
+char *_strcat(char *dest, char *src)
 {
 	char *ret = dest;
 

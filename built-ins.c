@@ -9,7 +9,7 @@
 int _alias(data_t *input)
 {
 	int m = 0;
-	char *t = NULL;
+	char *c = NULL;
 	log_t *node = NULL;
 
 	if (input->argc == 1)
@@ -17,43 +17,43 @@ int _alias(data_t *input)
 		node = input->alias;
 		while (node)
 		{
-			print_alias(node);
+			print_thealias(node);
 			node = node->next;
 		}
 		return (0);
 	}
 	for (m = 1; input->argv[m]; m++)
 	{
-		t = _strchr(input->argv[m], '=');
-		if (p)
-			set_alias(input, input->argv[m]);
+		c = _strchr(input->argv[m], '=');
+		if (c)
+			set_the_alias(input, input->argv[m]);
 		else
-			print_alias(node_starts_with(input->alias, input->argv[m], '=');
+			print_thealias(node_starts_with(input->alias, input->argv[m], '='));
 	}
 	return (0);
 }
 /**
- * _exit - terminates the calling process
+ * _myexit - terminates the calling process
  * @input: parameter structure
  *
  * Return: exits with a given exit status (0)
  */
-int _exit(data_t *input)
+int _myexit(data_t *input)
 {
 	int check;
 
 	if (input->argv[1])
 	{
-		check = _myatoi(input->argv[1]);
+		check = str2int(input->argv[1]);
 		if (check == -1)
 		{
 			input->status = 2;
-			print_error(input, "Illegal number: ");
-			_erputs(input->arg[1]);
+			print_errmsg(input, "Illegal number: ");
+			_erputs(input->argv[1]);
 			_erputchar('\n');
 			return (1);
 		}
-		input->err_num = _myatoi(input->argv[1]);
+		input->err_num = str2int(input->argv[1]);
 		return (-2);
 	}
 	input->err_num = -1;
@@ -93,7 +93,7 @@ int _cd(data_t *input)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!input->argv[1])
 	{
-		dir = _mygetenv(input, "HOME=");
+		d = _mygetenv(input, "HOME=");
 		if (!d)
 			chdir_ret =
 				chdir((d = _mygetenv(input, "PWD=")) ? d : "/");
@@ -104,7 +104,7 @@ int _cd(data_t *input)
 	{
 		if (!_mygetenv(input, "OLDPWD="))
 		{
-			_puts(s);
+			_puts(m);
 			_putchar('\n');
 			return (1);
 		}
@@ -113,17 +113,17 @@ int _cd(data_t *input)
 			chdir((d = _mygetenv(input, "OLDPWD=")) ? d : "/");							}
 	else
 		chdir_ret = chdir(input->argv[1]);
-		if (chdir_ret == -1)
-		{
-			print_error(input, "there's a problem, cd not possible ");
-			_erputs(input->argv[1]), _erputchar('\n');
-		}
-		else
-		{
-			_setmyenv(input, "OLDPWD", _mygetenv(input, "PWD="));
-			_setmyenv(input, "PWD", getcwd(buff, 1024));
-		}
-		return (0);
+	if (chdir_ret == -1)
+	{
+		print_errmsg(input, "there's a problem, cd not possible ");
+		_erputs(input->argv[1]), _erputchar('\n');
+	}
+	else
+	{
+		_setmyenv(input, "OLDPWD", _mygetenv(input, "PWD="));
+		_setmyenv(input, "PWD", getcwd(buff, 1024));
+	}
+	return (0);
 }
 
 /**
@@ -134,6 +134,6 @@ int _cd(data_t *input)
  */
 int _history(data_t *input)
 {
-	print_list(input->history);
+	print_str_list(input->history);
 	return (0);
 }
