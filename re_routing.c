@@ -18,7 +18,7 @@ char *fillsmem(char *s, char b, unsigned int n)
 }
 
 /**
- * freestr - frees a string of strings
+ * ffree - frees a string of strings
  * @pp: string of strings
  *
  */

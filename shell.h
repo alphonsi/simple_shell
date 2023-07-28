@@ -174,7 +174,7 @@ void print_errmsg(data_t *input, char *estr);
 void remov_cmts(char *buf);
 
 /* re-routing.c functions */
- 
+
 char *fillsmem(char *s, char b, unsigned int n);
 void ffree(char **pp);
 void *reallocmem(void *ptr, unsigned int old_size, unsigned int new_size);
