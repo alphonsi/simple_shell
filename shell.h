@@ -51,6 +51,7 @@ extern char **environ;
  * @num: the number field
  * @str: given string
  * @next: points to the next node
+ *
  */
 typedef struct liststr
 {
@@ -80,6 +81,7 @@ typedef struct liststr
  * @cmd_buf_type: CMD_type ||, &&, ;
  * @readfd: the fd from which to read line input
  * @histcount: the history line number count
+ *
  */
 typedef struct feeding
 {
@@ -111,6 +113,7 @@ typedef struct feeding
  * struct builtin - contains a builtin string and related function
  * @type: the builtin command flag
  * @func: the function
+ *
  */
 typedef struct builtin
 {
@@ -178,7 +181,6 @@ void remov_cmts(char *buf);
 char *fillsmem(char *s, char b, unsigned int n);
 void ffree(char **pp);
 void *reallocmem(void *ptr, unsigned int old_size, unsigned int new_size);
-
 
 /* utilis.c functions */
 int issachain_delim(data_t *input, char *buf, size_t *p);
