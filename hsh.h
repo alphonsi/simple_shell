@@ -184,7 +184,7 @@ char *convert_number(long int, int, int);
 void remove_comments(char *);
 
 /* builtin emulators  */
-int _Shellyexit(feed_t *);
+int _Shehellyexit(feed_t *);
 int _Shellycd(feed_t *);
 int _Shellyhelp(feed_t *);
 
@@ -197,45 +197,45 @@ ssize_t get_input(feed_t *);
 int _getline(feed_t *, char **, size_t *);
 void sigintHandler(int);
 
-/* 模块信息e */
+/* contrl functions */
 void clear_info(feed_t *);
 void set_info(feed_t *, char **);
 void free_info(feed_t *, int);
 
-/* 环境模块e */
+/* env functions */
 char *_getenv(feed_t *, const char *);
 int _Shellyenv(feed_t *);
 int _Shellysetenv(feed_t *);
 int _Shellyunsetenv(feed_t *);
 int populate_env_list(feed_t *);
 
-/* 起泡率 */
+/*environ  var functions  */
 char **get_environ(feed_t *);
 int _unsetenv(feed_t *, char *);
 int _setenv(feed_t *, char *, char *);
 
-/* 文件 _io_ 函数  */
+/* history fuctions */
 char *get_history_file(feed_t *info);
 int write_history(feed_t *info);
 int read_history(feed_t *info);
 int build_history_list(feed_t *info, char *buf, int linecount);
 int renumber_history(feed_t *info);
 
-/* 列表字符串  module */
+/*string functions */
 roster_t *add_node(roster_t **, const char *, int);
 roster_t *add_node_end(roster_t **, const char *, int);
 size_t print_list_str(const roster_t *);
 int delete_node_at_index(roster_t **, unsigned int);
 void free_list(roster_t **);
 
-/* 自述文件  module */
+/* more string */
 size_t list_len(const roster_t *);
 char **roster_to_strings(roster_t *);
 size_t print_list(const roster_t *);
 roster_t *node_starts_with(roster_t *, char *, char);
 ssize_t get_node_index(roster_t *, roster_t *);
 
-/*  自述文件 */
+/* piping functions  */
 int is_chain(feed_t *, char *, size_t *);
 void check_chain(feed_t *, char *, size_t *, size_t, size_t);
 int substitute_alias(feed_t *);

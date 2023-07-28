@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "hsh.h"
 
 /**
  * get_history_file - gets the history file
@@ -54,12 +54,12 @@ int write_history(feed_t *info)
 }
 
 /**
- * read_history - reads history from file
+ * read_hst - reads history from file
  * @info: the parameter struct
  *
  * Return: histcount on success, 0 otherwise
  */
-int read_history(feed_t *info)
+int read_hst(feed_t *info)
 {
 	int i, last = 0, linecount = 0;
 	ssize_t fd, rdlen, fsize = 0;

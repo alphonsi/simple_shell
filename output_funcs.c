@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "hsh.h"
 
 /**
  * input_buf - buffers chained commands
@@ -165,6 +165,6 @@ int _getline(feed_t *info, char **ptr, size_t *length)
 void sigintHandler(__attribute__((unused))int sig_num)
 {
 	_puts("\n");
-	_puts("$ ");
+	_puts("Bevop-$ ");
 	_putchar(BUF_FLUSH);
 }

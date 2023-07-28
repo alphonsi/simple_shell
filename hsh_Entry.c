@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "hsh.h"
 
 /**
  * main - entry point
@@ -38,7 +38,7 @@ int main(int ac, char **av)
 		info->readfd = fd;
 	}
 	populate_env_list(info);
-	read_history(info);
+	read_hst(info);
 	hsh(info, av);
 	return (EXIT_SUCCESS);
 }
