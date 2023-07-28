@@ -59,11 +59,9 @@ int find_builtin(feed_t *info)
 		{"exit", _Shellyexit},
 		{"env", _Shellyenv},
 		{"help", _Shellyhelp},
-		{"history", _Shellyhistory},
 		{"setenv", _Shellysetenv},
 		{"unsetenv", _Shellyunsetenv},
 		{"cd", _Shellycd},
-		{"alias", _Shellyalias},
 		{NULL, NULL}
 	};
 
