@@ -1,32 +1,32 @@
 #include "shell.h"
 
 /**
- *_erputs - prints an input string
+ *_eputs - prints an input string
  * @str: the string to be printed
  *
  * Return: Nothing
  */
-void _erputs(char *str)
+void _eputs(char *str)
 {
-	int m = 0;
+	int i = 0;
 
 	if (!str)
 		return;
-	while (str[m] != '\0')
+	while (str[i] != '\0')
 	{
-		_erputchar(str[m]);
-		m++;
+		_eputchar(str[i]);
+		i++;
 	}
 }
 
 /**
- * _erputchar - writes the character c to stderr
+ * _eputchar - writes the character c to stderr
  * @c: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _erputchar(char c)
+int _eputchar(char c)
 {
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
@@ -83,3 +83,4 @@ int _putsfd(char *str, int fd)
 	}
 	return (i);
 }
+

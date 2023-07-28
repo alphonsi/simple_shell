@@ -1,119 +1,76 @@
 #include "shell.h"
 
 /**
- **_strncpy - copies a string
- *@dest: destination string to be copied
- *@src: the source string
- *@n: the amount of characters to be copied
- *Return: the concatenated string
- */
-char *_strncpy(char *dest, char *src, int n)
-{
-	int i, e;
-	char *s = dest;
-
-	i = 0;
-	while (src[i] != '\0' && i < n - 1)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (i < n)
-	{
-		e = i;
-		while (e < n)
-		{
-			dest[e] = '\0';
-			e++;
-		}
-	}
-	return (s);
-}
-
-/**
- **_strncat - concatenates two strings
- *@dest: first string
- *@src: second string
- *@n: amount of bytes maximally used
- *Return: concatenated string
- */
-char *_strncat(char *dest, char *src, int n)
-{
-	int i, e;
-	char *s = dest;
-
-	i = 0;
-	e = 0;
-	while (dest[i] != '\0')
-		i++;
-	while (src[e] != '\0' && e < n)
-	{
-		dest[i] = src[e];
-		i++;
-		e++;
-	}
-	if (e < n)
-		dest[i] = '\0';
-	return (s);
-}
-
-/**
- **_strchr - locates character in a string
- *@s: string being parsed
- *@c: character to look for
- *Return: (s) a pointer to the memory area s
- */
-char *_strchr(char *s, char c)
-{
-	do {
-		if (*s == c)
-			return (s);
-	} while (*s++ != '\0');
-
-	return (NULL);
-}
-
-/**
- * _strcpy - copies a string
- * @dest: the destination
- * @src: the source
+ * _strlen - returns the len of a string
+ * @s: the string whose len to check
  *
- * Return: pointer to destination
+ * Return: integer len of string
  */
-char *_strcpy(char *dest, char *src)
+int _strlen(char *s)
 {
 	int i = 0;
 
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
-	{
-		dest[i] = src[i];
+	if (!s)
+		return (0);
+
+	while (*s++)
 		i++;
-	}
-	dest[i] = 0;
-	return (dest);
+	return (i);
 }
 
 /**
- * _strdup - duplicates a string
- * @str: the string to duplicate
+ * _strcmp - performs lexicogarphic comparison of two strangs.
+ * @s1: the first str
+ * @s2: the second str
  *
- * Return: pointer to the duplicated string
+ * Return: negative if s1 < s2, positive if s1 > s2, zero if s1 == s2
  */
-char *_strdup(const char *str)
+int _strcmp(char *s1, char *s2)
 {
-	int length = 0;
-	char *ret;
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
+	}
+	if (*s1 == *s2)
+		return (0);
+	else
+		return (*s1 < *s2 ? -1 : 1);
+}
 
-	if (str == NULL)
-		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
-		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
+/**
+ * starts_with - checks if needle starts with haystack
+ * @haystack: string to search
+ * @needle: the substring to find
+ *
+ * Return: address of next char of haystack or NULL
+ */
+char *starts_with(const char *haystack, const char *needle)
+{
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	return ((char *)haystack);
+}
+
+/**
+ * _strcat - concatenates two strings
+ * @dest: the destination buffer
+ * @src: the source buffer
+ *
+ * Return: pointer to destination buffer
+ */
+char *_strcat(char *dest, char *src)
+{
+	char *ret = dest;
+
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = *src;
 	return (ret);
 }
+
