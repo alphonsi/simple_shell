@@ -56,7 +56,7 @@ int find_builtin(feed_t *info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", exit_builtin},
+		{"exit", _Shehellyexit},
 		{"env", _Shellyenv},
 		{"help", _Shellyhelp},
 		{"setenv", _Shellysetenv},

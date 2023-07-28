@@ -1,13 +1,13 @@
 #include "hsh.h"
 
 /**
- * _Shellyexit - 退出外壳
+ * _Shehellyexit - 退出外壳
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: exits with a given exit status
  *         (0) if info.argv[0] != "exit"
  */
-int _Shellyexit(feed_t *info)
+int _Shehellyexit(feed_t *info)
 {
 	int exitcheck;
 
