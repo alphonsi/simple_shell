@@ -17,7 +17,8 @@ char **_strtok(char *string, char *lim)
 	if (!lim)
 		lim = " ";
 	for (i = 0; string[i] != '\0'; i++)
-		if (!issadelim(string[i], lim) && (issadelim(string[i + 1], lim) || !string[i + 1]))
+		if (!issadelim(string[i], lim) && (issadelim(string[i + 1], lim) ||
+			!string[i + 1]))
 			numwords++;
 
 	if (numwords == 0)
