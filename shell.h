@@ -15,7 +15,7 @@
 
 
 /* command chaining */
-rm 
+
 #define CMD_NORM	0
 #define CMD_OR		1
 #define CMD_AND		2
